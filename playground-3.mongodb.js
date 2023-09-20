@@ -1,136 +1,137 @@
+use("patissier");
+// db.createCollection("cake");
 
-use("bdacademia");
-db.dropDatabase();
-use("bdacademia");
-db.createCollection("personal");
-db.personal.insertMany([
-    {_id:1,
-        nome:"Júlio",
-        salario:3000, 
-        alunos:[
+db.cake.insertMany([
+    {
+        _id:ObjectId(1),
+        nome: "Morango",
+        peso: "2kg",
+        preco: 120,
+        ingredientes: [
             {
-                nome:"Tere",
-                idade:28
+                nome: "Trigo",
+                quantidade: "400g"
             },
+
             {
-                nome:"João",
-                idade:34
+                nome: "Ovo",
+                quantidade: "6 unidades"
             },
+           
             {
-                nome:"Pedro",
-                idade:60
-            }
+                nome: "Morango",
+                quantidade: "20 unidades"
+            },
         ]
-    },
-    {_id:2,nome:"Adriano",salario:3000,alunos:[]},
-    {_id:3,nome:"Thaina",salario:4000,alunos:[]}
-])
-
-//Como apagar algum dado de uma collection
-// db.personal.drop() //Apaga uma collection
-// db.personal.find()
-
-db.personal.deleteMany({})
-
-
-db.createCollection("treino");
-
-db.treino.insertOne(
-    {
-        nome:"Quadriceps",
-        dia: "Segunda",
-        exercicios:[
-            {
-                nome:"Agachamento Livre",
-                serie:5,
-                repeticoes:12,
-                peso:100
+        },
+       
+        {
+            _id:ObjectId(2),
+            nome: "Floresta Negra",
+            peso: "2kg",
+            preco: 120,
+            ingredientes: [
+                {
+                    nome: "Trigo",
+                    quantidade: "400g"
+                },
+    
+                {
+                    nome: "Ovo",
+                    quantidade: "6 unidades"
+                },
+               
+                {
+                    nome: "Cereja",
+                    quantidade: "20 unidades"
+                },
+            ]
             },
             {
-                nome:"Leg 45",
-                serie:5,
-                repeticoes:12,
-                peso:200
+                _id:ObjectId(3),
+                nome: "Chocolate",
+                peso: "2kg",
+                preco: 120,
+                ingredientes: [
+                    {
+                        nome: "Trigo",
+                        quantidade: "400g"
+                    },
+        
+                    {
+                        nome: "Ovo",
+                        quantidade: "6 unidades"
+                    },
+                   
+                    {
+                        nome: "Cacau",
+                        quantidade: "200g"
+                    },
+                ]
+                },
+
+                {
+                    _id:ObjectId(4),
+                    nome: "Bolo de Banana",
+                    peso: "2kg",
+                    preco: 120,
+                    ingredientes: [
+                        {
+                            nome: "Trigo",
+                            quantidade: "400g"
+                        },
+            
+                        {
+                            nome: "Ovo",
+                            quantidade: "6 unidades"
+                        },
+                       
+                        {
+                            nome: "Banana",
+                            quantidade: "10 unidades"
+                        },
+                    ]
+                    },
+
+    ])
+
+   
+   
+    db.cake.deleteOne({_id:ObjectId("00000001d2bd83ffc43a58ba")});
+   
+    db.cake.find({}, { nome: true, preco: true});
+   
+   
+    db.cake.find ({preco: {$lte: 70}}, { nome: true, preco: true });
+   
+   
+   
+   
+    db.cake.updateOne(
+        { _id: ObjectId('000000021f0ae863f3d2e1e3') },
+        {
+            $set: {
+                nome: "Bolo de Laranja",
+                peso: "2kg"
             },
-            {
-                nome:"Cadeira Extensora",
-                serie:5,
-                repeticoes:12,
-                peso:104
-            },
-            {
-                nome:"Agachamento Hack",
-                serie:5,
-                repeticoes:12,
-                peso:80
+            $push: {
+                ingredientes: {nome:"Laranja", quantidade: "5 unidades"}
             }
-        ]
-    }
-)
-db.treino.insertOne(
-    {
-        nome:"Costas",
-        dia: "Terça",
-        exercicios:[
-            {
-                nome:"Barra Fixa",
-                serie:5,
-                repeticoes:6,
-                peso:20
-            },
-            {
-                nome:"Remada Baixa",
-                serie:4,
-                repeticoes:15,
-                peso:60
-            },
-            {
-                nome:"Remada Cavalo",
-                serie:5,
-                repeticoes:12,
-                peso:80
-            },
-            {
-                nome:"Puxada Alta",
-                serie:4,
-                repeticoes:15,
-                peso:80
-            }
-        ]
-    }
-)
-
-use("bdacademia")
-//db.treino.find({})
-//db.treino.find({nome:"Costas"})
-db.treino.find({_id:ObjectId("64f866dedd11dfac8817592d")})
-
-
-use("bdacademia")
-db.treino.updateOne(
-    {_id:ObjectId("64f866dedd11dfac8817592d")},
-    {
-        $set:{dia:"Sexta"}
-    }
-)
-
-
-use("bdacademia")
-db.treino.updateOne(
-    {_id:ObjectId("64f866dedd11dfac8817592d"),"exercicios.nome":"Barra Fixa"},
-    {
-        $set:{
-            dia:"Sexta",
-            "exercicios.$.repeticoes":8
         }
-    }
-)
+        );
+       
+       
+        use("patissier");
 
-
-
-    // {
-    //     "nome": "Barra Fixa",
-    //     "serie": 5,
-    //     "repeticoes": 6,
-    //     "peso": 20
-    //   },
+    db.cake.updateOne(
+        {_id: ObjectId("00000003aa680e51f7aec7b5"), "ingredientes.nome": "Coco"},
+        {
+            $set:{
+                "ingredientes.$.nome": "ovo",
+                "ingredientes.$.quantidade": "3 unidades"
+            }
+        }
+    )
+   
+   
+    db.cake.find({_id:ObjectId("00000002aa680e51f7aec7b4")})
